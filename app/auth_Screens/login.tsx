@@ -1,11 +1,48 @@
+// react imports 
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useRouter } from "expo-router";
 
+
+// firebase authondication imports
+
+import { auth } from "../firebase/firebaseConfig";
+import { signInWithEmailAndPassword, getIdToken } from "firebase/auth";
+
+
+
+
+// page main function part......................................................
 function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+
+
+
+  // handle loging function with firebase authentication.............
+  const handleLogin = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      
+      // for get the token only 
+      const user = userCredential.user;
+      const token = await getIdToken(user);
+
+      alert("User logged in successfully!");
+
+      router.push("/(tabs)/home");
+
+
+    } catch (error) {
+      console.error("Error logging or invalid authondication: ", error);
+    }
+  }
+
+
+
+
 
   return (
     <View style={styles.container}>
@@ -26,7 +63,7 @@ function LoginScreen() {
         style={styles.input}
       />
 
-      <TouchableOpacity style={styles.button} onPress ={() => router.push('/(tabs)/home')}>
+      <TouchableOpacity style={styles.button} onPress ={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
@@ -37,6 +74,11 @@ function LoginScreen() {
   );
 };
 
+
+
+
+
+// all styles here......................................................
 const styles = StyleSheet.create({
   container: { 
     flex: 1,
