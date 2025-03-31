@@ -1,14 +1,59 @@
+// react imports 
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useRouter } from "expo-router";
 
 
+
+// firebase authondication imports
+import {auth, db} from "../firebase/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import {doc, serverTimestamp, setDoc} from "firebase/firestore";
+
+
+
+
+// page main function part......................................................
 function SignupScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
+
+
+
+
+
+// user registration handle function with firebase setDoc method (automatically hash the password)....
+const handleRegister = async () => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+
+    await setDoc(doc(db, "users", user.uid), {
+      id: user.uid,
+      email: user.email,
+      name: "new User" ,
+      profile_picture: null,
+      created_at: serverTimestamp(),
+
+    });
+
+    alert("User registered successfully!");
+
+    router.push("/auth_Screens/login");
+  } catch (error) {
+    console.error("Error adding details: ", error);
+  }
+};
+
+
+
+
+
+// page return part......................................................
   return (
     <View style={styles.container}>
       <Image source={require("../../assets/images/loginimage.png")} style={styles.image} />
@@ -34,7 +79,7 @@ function SignupScreen() {
         style={styles.input}
       />
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress= {handleRegister}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
@@ -45,6 +90,8 @@ function SignupScreen() {
   );
 };
 
+
+// all styles here......................................................
 const styles = StyleSheet.create({
   container: { 
     flex: 1, 
@@ -84,5 +131,7 @@ const styles = StyleSheet.create({
     color: "#007bff" },
     
 });
+
+
 
 export default SignupScreen;

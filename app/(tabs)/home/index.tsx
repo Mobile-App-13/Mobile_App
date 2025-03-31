@@ -3,13 +3,40 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 
 
+// temparary logout auth imports .......................
+import { auth } from "../../firebase/firebaseConfig";
+import { signOut } from "firebase/auth";
 
 
+
+
+// page main function part......................................................
 function HomeScreen () {
 
 
+  // temparary handleLogout function for testing purpose only.............................................
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      alert("User logged out successfully!");
+
+      router.push("/auth_Screens/login")
+
+    } catch (error) {
+      console.error("Error logging out: ", error);
+    }
+  }
+  //.............................................................
+
+
+
+  // router for navigation......................................................
   const router = useRouter();
 
+
+
+
+  // retun part for page......................................................
   return (
     <View style={styles.container}>
       
@@ -35,6 +62,12 @@ function HomeScreen () {
         </TouchableOpacity>
       </View>
 
+
+      {/* temarary logout button for testing purpose only.............................................*/}
+      <TouchableOpacity style={styles.buttonlogout} onPress={handleLogout}>
+        <Text style={styles.buttonText}>Logout</Text>
+      </TouchableOpacity>
+
       
     </View>
   );
@@ -43,8 +76,7 @@ function HomeScreen () {
 
 
 
-
-export default HomeScreen;
+// all styles for the page......................................................
 
 const styles = StyleSheet.create({
   container: {
@@ -78,11 +110,13 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     marginTop: 20,
+    justifyContent: "space-between",
+    marginBottom: 60,
     gap: 20,
   },
   button: {
     backgroundColor: "#007BFF",
-    paddingVertical: 15,
+    paddingVertical: 30,
     paddingHorizontal: 20,
     borderRadius: 10,
     shadowColor: "#000",
@@ -93,6 +127,20 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
-  }
+  },
+
+  buttonlogout: {
+    backgroundColor: "#FF0000",
+    paddingVertical: 5,
+    paddingHorizontal: 20,  
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+  },
   
 });
+
+
+export default HomeScreen;
