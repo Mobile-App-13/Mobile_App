@@ -1,8 +1,8 @@
 // react imports 
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, KeyboardAvoidingView } from "react-native";
 import { useRouter } from "expo-router";
-
+import { Ionicons } from '@expo/vector-icons';
 
 // firebase authondication imports
 
@@ -46,78 +46,114 @@ function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../assets/images/loginimage.png")} style={styles.image} />
-      <Text style={styles.title}>EXPENSE TRACKER</Text>
+      {/* 1st Half*/}
+      <View style={{ flex:4}}>
+        <View style={{justifyContent:"center", alignItems:"center"}}>
+          <Image source={require("../../assets/images/loginimage.png")} style={styles.image} />
+          <Text style={styles.title}>EXPENSE{"\n"}        TRACKER</Text>
+        </View>
+      </View>
+
+      {/* 2nd Half*/}
+      <View style={{ flex:6, justifyContent:"center", alignItems:"center"}}>
+        <View style={styles.inputContainer}>
+          <Ionicons name="mail-outline" size={20} color="white" style={styles.icon} />
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor="gray"
+            value={email}
+            onChangeText={setEmail}
+            style={styles.input}
+          />
+        </View>
       
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={styles.input}
-      />
+        <View style={styles.inputContainer}>
+            <Ionicons name="lock-closed-outline" size={20} color="white" style={styles.icon} />
+            <TextInput
+              placeholder="Password"
+              placeholderTextColor="gray"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              style={styles.input}
+            />
+          </View>
 
-      <TouchableOpacity style={styles.button} onPress ={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.push("/auth_Screens/register")}>
-        <Text style={styles.linkText}>I don't have an account</Text>
-      </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/auth_Screens/register")}>
+            <Text style={styles.linkText}>I don't have an account</Text>
+          </TouchableOpacity>
+
+      </View>
+      
+      
+      
     </View>
   );
 };
 
-
-
-
-
-// all styles here......................................................
 const styles = StyleSheet.create({
   container: { 
     flex: 1,
     alignItems: "center", 
-    padding: 20 },
-
+    justifyContent: "center",
+    backgroundColor:"black"
+  },
+  imageContainer: {
+    flexDirection:"column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   image: { 
-    width: "100%", 
-    height: 200, 
-    resizeMode: "cover" },
-
+    width: 500,
+    height: 400,
+    resizeMode: "cover",
+    
+  },
   title: { 
-    fontSize: 24, 
+    fontSize: 60, 
     fontWeight: "bold", 
-    marginVertical: 10 },
-
+    color: "white",
+    textAlign: "center",
+    position:"absolute"
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "90%",
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+  },
+  icon: {
+    marginRight: 10
+  },
   input: { 
-    width: "90%", 
+    flex: 1,
     padding: 12, 
-    borderWidth: 1, 
-    borderRadius: 8, 
-    marginVertical: 5 },
-
+    color: "white"
+  },
   button: { 
     backgroundColor: "#007bff", 
     padding: 12, 
     borderRadius: 8, 
-    width: "90%", 
+    width: 200, 
     alignItems: "center", 
-    marginTop: 10 },
-
+    marginTop: 10 
+  },
   buttonText: { 
     color: "white", 
-    fontWeight: "bold" },
-
+    fontWeight: "bold" 
+  },
   linkText: { 
     marginTop: 10, 
-    color: "#007bff" },
-
+    color: "#007bff" 
+  },
 });
 
-export default LoginScreen;
+export default LoginScreen

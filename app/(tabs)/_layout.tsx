@@ -8,7 +8,7 @@ function TabLayOut(){
 
     return(
         <Tabs>
-            <Tabs.Screen name="home" options={{
+            <Tabs.Screen name="home/index" options={{
                 title:'home',
                 tabBarIcon: ({size,color})=>(<Ionicons name="wallet-outline" size={size} color={color} />),
                 headerShown:false
@@ -18,16 +18,19 @@ function TabLayOut(){
                 tabBarIcon: ({size,color})=>(<Ionicons name="wallet-outline" size={size} color={color} />),
                 headerShown:false
                 }} />
-            <Tabs.Screen name="analysis" options={{
+            <Tabs.Screen name="analysis/index" options={{
                 title:'Analysis',
                 tabBarIcon: ({size,color})=>(<AntDesign name="linechart" size={size} color={color} />),
                 headerShown:false
                 }} />
-            <Tabs.Screen name="settings" options={{
+            <Tabs.Screen name="settings/index" options={{
                 title:'Settings',
                 tabBarIcon: ({size,color})=>(<Feather name="settings" size={size} color={color} />),
                 headerShown:false
                 }} />
+            
+            
+
         </Tabs>
     )
 }

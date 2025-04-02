@@ -16,10 +16,8 @@ const expensesData = [
     { id: "7", name: "Health & Fitness", price: "$60", date:"26.03.2025", icon: "fitness-center" },
     { id: "8", name: "Travel", price: "$ 200", date:"26.03.2025", icon: "flight" },
     { id: "9", name: "Miscellaneous", price: "$ 20", date:"26.03.2025", icon: "more-horiz" },   
-
-
-
 ];
+
 
 
 
@@ -32,6 +30,8 @@ export default function ExpensesScreen() {
 
 
     const router = useRouter();
+
+    
 
 
   // retunr part of the page......................................................
@@ -48,7 +48,11 @@ export default function ExpensesScreen() {
 
 
         {/* Add Expense Button */}
-        <TouchableOpacity style={styles.button} >
+        <TouchableOpacity 
+            style={styles.button} 
+            onPress={()=>router.push("/(tabs)/expenses/add-expense")}
+            
+            >
               <Text style={styles.buttonText}>Add a new Expense</Text>
         </TouchableOpacity>            
 
@@ -62,7 +66,7 @@ export default function ExpensesScreen() {
             renderItem={({ item }) => (
             <TouchableOpacity
                 style={styles.detailrow}
-                onPress={() => alert(`Clicked on ${item.name}`)}
+                onPress={()=>router.push(`/(tabs)/expenses/${item.id}`)}
             >
 
 
