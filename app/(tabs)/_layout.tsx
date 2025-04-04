@@ -10,7 +10,7 @@ function TabLayOut(){
         <Tabs>
             <Tabs.Screen name="home/index" options={{
                 title:'home',
-                tabBarIcon: ({size,color})=>(<Ionicons name="wallet-outline" size={size} color={color} />),
+                tabBarIcon: ({size,color})=>(<AntDesign name="home" size={size} color={color} />),
                 headerShown:false
                 }} />
             <Tabs.Screen name="expenses" options={{
