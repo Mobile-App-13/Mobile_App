@@ -40,8 +40,8 @@ export default function ExpensesScreen() {
         <View style={{ flex: 1, padding: 10, backgroundColor: "#f5f5f5" }}>
         {/* Header Image */}
             <Image
-                source={require("../../../assets/images/Expenseimage.png")}
-                style={{ width: "100%", height: 200, resizeMode: "cover", borderRadius: 10 }}
+                source={require("../../../assets/images/PersonalExpenseimage.png")}
+                style={{ width: "100%", height: 400, resizeMode: "cover", borderRadius: 10 }}
                 />
             <Text style={styles.title}>PERSONEL EXPENSES</Text>
 
@@ -89,9 +89,14 @@ export default function ExpensesScreen() {
 
 
 
+
+
+
+
 // all styles for the page......................................................
 
 const styles = StyleSheet.create({
+
   title: { 
         fontSize: 24, 
         fontWeight: "bold", 

@@ -20,7 +20,7 @@ function individualExpenses(){
 
         <Text>Individual       {id}</Text>
       {/* Header */}
-        <Text style={styles.header}>Expenses Summary</Text>
+        <Text style={styles.header}>Expenses Details</Text>
 
       {/* Date & Currency */}
       <View style={styles.row}>
