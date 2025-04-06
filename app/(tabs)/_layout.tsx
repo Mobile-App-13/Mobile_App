@@ -23,7 +23,7 @@ function TabLayOut(){
                 tabBarIcon: ({size,color})=>(<AntDesign name="linechart" size={size} color={color} />),
                 headerShown:false
                 }} />
-            <Tabs.Screen name="settings/index" options={{
+            <Tabs.Screen name="settings" options={{
                 title:'Settings',
                 tabBarIcon: ({size,color})=>(<Feather name="settings" size={size} color={color} />),
                 headerShown:false
