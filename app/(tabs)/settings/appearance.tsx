@@ -7,13 +7,13 @@ export default function AppearanceScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Header with Icon */}
+      {/* Header with Eye Icon */}
       <View style={styles.header}>
         <Ionicons name="eye-outline" size={22} color="#4a4a4a" style={styles.headerIcon} />
         <Text style={styles.heading}>Appearance</Text>
       </View>
 
-      {/* Dark Mode */}
+      {/* Dark Mode Toggle */}
       <View style={styles.option}>
         <Ionicons name="moon-outline" size={24} color="#4a4a4a" style={styles.icon} />
         <Text style={styles.label}>Dark Mode</Text>
@@ -26,13 +26,13 @@ export default function AppearanceScreen() {
         />
       </View>
 
-      {/* Font Size */}
+      {/* Font Size Option */}
       <TouchableOpacity style={styles.option}>
         <MaterialIcons name="format-size" size={24} color="#4a4a4a" style={styles.icon} />
         <Text style={styles.label}>Font Size</Text>
       </TouchableOpacity>
 
-      {/* Theme Color */}
+      {/* Theme Color Option */}
       <TouchableOpacity style={styles.option}>
         <FontAwesome5 name="palette" size={20} color="#4a4a4a" style={styles.icon} />
         <Text style={styles.label}>Theme Color</Text>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   heading: {
-    fontSize: 22,
+    fontSize: 25,
     fontWeight: '600',
     color: '#333',
   },
