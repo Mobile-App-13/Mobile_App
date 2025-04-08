@@ -1,29 +1,35 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, Alert, StyleSheet } from "react-native";
-//import { Picker } from "@react-native-picker/picker";
-//import * as ImagePicker from "expo-image-picker";
+import { View, Text, TextInput, ScrollView, TouchableOpacity, Image, Alert, StyleSheet } from "react-native";
+
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
+import { useRouter } from "expo-router";
+
+import * as ImagePicker from "expo-image-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 function addExpenses(){
      
 
-    const [invoiceDate, setInvoiceDate] = useState("");
+    const [invoiceDate, setInvoiceDate] = useState<Date | string>("");
+    const [showDatePicker, setShowDatePicker] = useState(false);
+
     const [remark, setRemark] = useState("");
     const [invoiceDetails, setInvoiceDetails] = useState({
         company: "",
         address: "",
         referenceNumber: "",
     });
-    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState<{ name: string; icon: string } | null>(null);
     const [isOpen, setIsOpen] = useState(false);
     const [amountWithoutTax, setAmountWithoutTax] = useState("");
     const [taxPercentage, setTaxPercentage] = useState("");
     const [totalAmount, setTotalAmount] = useState("");
-    const [imageUri, setImageUri] = useState(null);
+    const [imageUri, setImageUri] = useState<string | null>(null);
+
+
+    const router = useRouter();
 
 
 
@@ -40,36 +46,44 @@ function addExpenses(){
         { name: "Miscellaneous", icon: "more-horiz" },
       ];
 
+
+
+   // Handle Date Selection
+   const handleDateChange = (event: any, selectedDate?: Date) => {
+      setShowDatePicker(false);
+      if (selectedDate) {
+        setInvoiceDate(selectedDate.toISOString());
+      }
+  };
+
+
+  // Open Image Picker
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+    });
+
+    if (!result.canceled) {
+        setImageUri(result.assets[0].uri);
+    }
+  };  
       
 
 // Category Picker function..................................................
-    const handleSelect = (category) => {
+    const handleSelect = (category: { name: string; icon: string }) => {
         setSelectedCategory(category);
         setIsOpen(false);
     };
       
     
-    
-    /* Image Picker
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-      
-        if (!result.canceled) {
-            setImageUri(result.uri);
-          }
-        }; 
-        */    
-
 
 
       
         // Calculate Total Amount
-        const calculateTotal = (amount, tax) => {
+        const calculateTotal = (amount: string, tax: string) => {
           if (amount && tax) {
             const total = parseFloat(amount) + (parseFloat(amount) * parseFloat(tax)) / 100;
             setTotalAmount(total.toFixed(2));
@@ -77,10 +91,10 @@ function addExpenses(){
         };
 
 
-     /* 
+     
         // Submit Expense to Firestore
         const handleSubmit = async () => {
-            if (!invoiceDate || !remark || !category || !amountWithoutTax || !taxPercentage) {
+            if ( !remark || !selectedCategory || !taxPercentage) {
                 Alert.alert("Error", "Please fill in all required fields");
                 return;
             }
@@ -95,16 +109,17 @@ function addExpenses(){
                     amountWithoutTax: parseFloat(amountWithoutTax),
                     taxPercentage: parseFloat(taxPercentage),
                     totalAmount: parseFloat(totalAmount),
-                    image: imageUri,
+                    image: imageUri || null,
                     timestamp: serverTimestamp(),
                 });
-                Alert.alert("Success", "Expense added successfully");
+                alert("Expense added successfully");
+                router.push("/(tabs)/expenses");
             } catch (error) {
                 console.error("Error adding document: ", error);
                 Alert.alert("Error", "Failed to add expense");
             }
         };               
-*/
+
     
       
 
@@ -126,15 +141,21 @@ function addExpenses(){
       
 
 
+             {/* Date picker */}
+             <Text>Invoice Date:</Text>
+             <TouchableOpacity style={{padding:10}} onPress={() => setShowDatePicker(true)}>
+                <Text>{invoiceDate ? invoiceDate.toDateString() : "Select a date"}</Text>
+             </TouchableOpacity>
 
-            {/* Invoice Date */}
-            <TextInput
-              placeholder="Invoice Date"
-              value={invoiceDate}
-              onChangeText={setInvoiceDate}
-              style={styles.input}
-            />
 
+            {showDatePicker && (
+              <DateTimePicker 
+                value={invoiceDate || new Date()}  
+                mode="date" 
+                display="default" 
+                onChange={handleDateChange} 
+              />
+        )}
 
       
             {/* Remark */}
@@ -230,14 +251,14 @@ function addExpenses(){
       
             {/* Image Picker */}
             <TouchableOpacity onPress={() => setImageUri(null)} style={styles.uploadButton}>
-                <Text style={{ color: "blue", textAlign: "center" }}>Upload Document/Image 📤</Text>
+                <Text style={{ color: "blue", textAlign: "center" }}>Upload a receipt</Text>
             </TouchableOpacity>
 
 
 
       
-            {/* Submit Button  onPress={handleSubmit}   */}
-            <TouchableOpacity  style={styles.submitButton}>
+            {/* Submit Button    */}
+            <TouchableOpacity  style={styles.submitButton} onPress={handleSubmit} >
               <Text style={{ color: "white", textAlign: "center" }}>Enter</Text>
             </TouchableOpacity>
           </ScrollView>

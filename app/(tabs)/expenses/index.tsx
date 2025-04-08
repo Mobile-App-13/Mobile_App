@@ -50,7 +50,7 @@ export default function ExpensesScreen() {
         {/* Add Expense Button */}
         <TouchableOpacity 
             style={styles.button} 
-            onPress={()=>router.push("/(tabs)/expenses/add-expense")}
+            onPress={()=>router.push("/(tabs)/expenses/Add-expense")}
             
             >
               <Text style={styles.buttonText}>Add a new Expense</Text>
