@@ -5,7 +5,7 @@ export default function Layout() {
     <Stack>
         <Stack.Screen name='index' options={{title:"Expense Details", headerShown:false}} />
         <Stack.Screen name='[id]' options={{title:"Expense Summery"}} />
-        <Stack.Screen name='add-expense' options={{title:"Add Expense", headerShown:true}} />
+        <Stack.Screen name='Add-expense' options={{title:"Add Expense", headerShown:true}} />
     </Stack>
   )
 }

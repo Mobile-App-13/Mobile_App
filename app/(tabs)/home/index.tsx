@@ -3,9 +3,6 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 
 
-// temparary logout auth imports .......................
-import { auth } from "../../firebase/firebaseConfig";
-import { signOut } from "firebase/auth";
 
 
 
@@ -14,26 +11,8 @@ import { signOut } from "firebase/auth";
 function HomeScreen () {
 
 
-  // temparary handleLogout function for testing purpose only.............................................
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      alert("User logged out successfully!");
-
-      router.push("/auth_Screens/login")
-
-    } catch (error) {
-      console.error("Error logging out: ", error);
-    }
-  }
-  //.............................................................
-
-
-
   // router for navigation......................................................
   const router = useRouter();
-
-
 
 
   // retun part for page......................................................
@@ -62,11 +41,6 @@ function HomeScreen () {
         </TouchableOpacity>
       </View>
 
-
-      {/* temarary logout button for testing purpose only.............................................*/}
-      <TouchableOpacity style={styles.buttonlogout} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Logout</Text>
-      </TouchableOpacity>
 
       
     </View>
