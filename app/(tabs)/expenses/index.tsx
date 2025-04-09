@@ -53,13 +53,13 @@ export default function ExpensesScreen() {
   // retunr part of the page......................................................
 
     return (
-        <View style={{ flex: 1, padding: 10, backgroundColor: "#f5f5f5" }}>
+        <View style={{ flex: 1, padding: 5, backgroundColor: "#f5f5f5",  }}>
         {/* Header Image */}
             <Image
                 source={require("../../../assets/images/PersonalExpenseimage.png")}
-                style={{ width: "100%", height: 400, resizeMode: "cover", borderRadius: 10 }}
+                style={{ width: "100%", height: 350, resizeMode: "cover", borderRadius: 5, marginBottom: 10 }}
                 />
-            <Text style={styles.title}>PERSONEL EXPENSES</Text>
+            <Text style={styles.title}>PERSONEL {"\n"}           EXPENSES</Text>
 
 
 
@@ -118,20 +118,30 @@ export default function ExpensesScreen() {
 const styles = StyleSheet.create({
 
   title: { 
-        fontSize: 24, 
-        fontWeight: "bold", 
-        marginVertical: 10 },
+    fontSize: 40, 
+    fontWeight: "bold", 
+    color: "white",
+    alignItems:"center",
+    position:"absolute",
+    top: 50,
+    left: 60,
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    borderRadius: 15,
+ },
+
   button: {
     backgroundColor: "#007BFF",
     paddingVertical: 20,
-    paddingHorizontal: 10,
+    paddingTop: 20,
+    margin: 20,
     borderRadius: 10,
-    shadowColor: "#000",
+    shadowColor: "black",
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,
   },
   buttonText: {
+    fontSize: 18,
     color: "#fff",
     fontWeight: "bold",
     textAlign: "center",

@@ -115,7 +115,7 @@ export default function IndividualExpenses() {
             </View>
 
             <View style={styles.row}>
-                <Text style={[styles.label, styles.boldText]}>Total Expense :</Text>
+                <Text style={[styles.label, styles.boldText]}>Total Amount :</Text>
                 <Text style={[styles.value, styles.boldText]}>{expense.totalAmount?.toFixed(2)}€</Text>
             </View>
 
@@ -137,51 +137,71 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: "#F9F9F9",
+        backgroundColor: "#fff",
+        borderWidth: 1,
+        borderRadius: 10,
     },
     header: {
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: "bold",
         textAlign: "center",
-        marginBottom: 20,
+        backgroundColor: "rgba(19, 24, 100, 0.28)",
+        borderRadius: 10,
+        padding: 15,
+        marginBottom: 25,
+        color: "#333",
     },
     row: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        marginBottom: 10,
+        marginBottom: 12,
+        paddingVertical: 6,
+        borderBottomWidth: 1,
+        borderBottomColor: "#EAEAEA", // Light separator
     },
     label: {
         fontSize: 16,
-        color: "#555",
+        color: "#666",
     },
     value: {
         fontSize: 16,
-        fontWeight: "bold",
+        fontWeight: "600",
+        color: "#000",
     },
     subHeader: {
         fontSize: 18,
         fontWeight: "bold",
-        marginTop: 15,
-        marginBottom: 5,
+        marginTop: 20,
+        marginBottom: 10,
+        color: "#444",
     },
     invoiceBox: {
-        backgroundColor: "#D3D3D3",
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 10,
+        backgroundColor: "#F0F0F0",
+        padding: 15,
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 3 },
+        shadowRadius: 5,
+        elevation: 3,
+        marginBottom: 22,
     },
     invoiceText: {
-        fontSize: 14,
+        fontSize: 16,
+        color: "#333",
     },
     boldText: {
         fontSize: 18,
         fontWeight: "bold",
+        color: "#222",
     },
     image: {
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
         resizeMode: "contain",
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "#DDD",
     },
 });
-

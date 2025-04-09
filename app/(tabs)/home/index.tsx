@@ -33,11 +33,11 @@ function HomeScreen () {
       
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => router.push("/(tabs)/expenses")}>
-          <Text style={styles.buttonText}>Personal Expenses</Text>
+          <Text style={styles.buttonText}>Personal {"\n"} Expenses</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={() => router.push("/(tabs)/expenses")}>
-          <Text style={styles.buttonText}>Organizational Expenses</Text>
+          <Text style={styles.buttonText}>Organizational {"\n"} Expenses</Text>
         </TouchableOpacity>
       </View>
 
@@ -58,48 +58,74 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     paddingTop: 50,
+    padding: 5,
   },
   headerImage: {
     width: "100%",
-    height: 200,
+    height: 300,
     resizeMode: "cover",
+    borderRadius: 5,
+    shadowColor: "#000",
   },
   title: {
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: "bold",
-    color: "#003366",
-    marginTop: 10,
+    color: "white",
+    alignItems:"center",
+    position:"absolute",
+    padding: 20,
+    top: 125,
+    left: 60,
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    borderRadius: 15,
+ 
   },
   subtitle: {
-    fontSize: 14,
-    color: "#666",
+    fontSize: 18,
+    color: "white",
+    alignItems:"center",
+    position:"absolute",
+    top: 219,
+    left: 255,
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
   },
   description: {
+    fontSize: 16,
+    fontWeight: "bold",
     textAlign: "center",
-    paddingHorizontal: 20,
-    marginVertical: 10,
-    fontSize: 14,
+    padding: 20,
+    marginVertical: 20,
+    marginHorizontal: 70,
+    borderRadius: 10,
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
+    shadowColor: "black",
+    shadowOpacity: 0.9,
     color: "#444",
   },
   buttonContainer: {
     flexDirection: "row",
-    marginTop: 20,
+    width: "100%",
+    marginTop: 40,
     justifyContent: "space-between",
-    marginBottom: 60,
+    alignItems: "center",
+    paddingHorizontal: 20,
     gap: 20,
   },
   button: {
+    flex:1,
+    alignItems: "center",
     backgroundColor: "#007BFF",
-    paddingVertical: 30,
-    paddingHorizontal: 20,
+    padding: 20,
     borderRadius: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
+    justifyContent: "center",
+    shadowColor: "black",
+    shadowOpacity: 0.8,
+    height: 150,
   },
   buttonText: {
+    fontSize: 18,
     color: "#fff",
+    textAlign: "center",
     fontWeight: "bold",
   },
 

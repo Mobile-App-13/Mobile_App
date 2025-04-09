@@ -131,12 +131,14 @@ function addExpenses(){
     return (
 
 
-          <ScrollView style={{ padding: 20 }}>
+          <ScrollView style={{ padding: 10 }}>
             <Image
                             source={require("../../../assets/images/AddExpense.jpg")}
-                            style={{ width: "100%", height: 350, resizeMode: "cover", borderRadius: 10 }}
+                            style={{ width: "100%", height: 350, resizeMode: "cover", borderRadius: 5 }}
                             />
-            <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "center", paddingBottom: 20 }}>Add Expense</Text>
+            <Text style={{ fontSize: 40, top:80, left:130, color: "white",alignItems:"center",    position:"absolute",fontWeight: "bold", textAlign: "left", padding: 10, backgroundColor: "rgba(24, 22, 112, 0.23)", }}>ADD {"\n"}       EXPENSE</Text>
+
+            <Text style={{ fontSize: 20, color: "black",alignItems:"center",   fontWeight: "bold", textAlign: "left", paddingBottom: 25,  }}>Enter Your Expense Details Here..</Text>
       
       
 
