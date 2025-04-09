@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 
 
 
+
 // firebase authondication imports
 import {auth, db} from "../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -66,7 +67,7 @@ return (
       <MaterialIcons 
       name="person" 
       size={20} 
-      color="#aaa" 
+      color="black" 
       style={styles.icon} />
 
       <TextInput 
@@ -81,7 +82,7 @@ return (
 
       <MaterialIcons 
       name="email" size={20} 
-      color="#aaa" 
+      color="black" 
       style={styles.icon} />
 
       <TextInput 
@@ -98,7 +99,7 @@ return (
       <MaterialIcons 
       name="lock" 
       size={20} 
-      color="#aaa" 
+      color="black" 
       style={styles.icon} />
 
       <TextInput 
@@ -128,38 +129,40 @@ const styles = StyleSheet.create({
   container: { 
     flex: 1, 
     alignItems: "center", 
-    padding: 20, 
-    backgroundColor: "" 
+    justifyContent: "center",
+    backgroundColor: "white" 
   },
 
   imageContainer: { 
-    position: "relative", 
-    width: "100%" 
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",  
+    
   },
 
   image: { 
-    width: "100%", 
-    height: 200, 
-    resizeMode: "cover" 
+    width: 500,
+    height: 400, 
+    resizeMode: "cover", 
+    
   },
 
   title: { 
-    position: "absolute", 
-    top: "40%", 
-    left: "50%", 
-    transform: [{ translateX: -50 }], 
-    color: "white", 
-    fontSize: 24, 
-    fontWeight: "bold" 
+    fontSize: 60, 
+    fontWeight: "bold", 
+    color: "white",
+    textAlign: "center",
+    position:"absolute"
   },
 
   inputContainer: {
     flexDirection: "row", 
     alignItems: "center", 
     width: "90%", 
-    backgroundColor: "#222", 
     borderRadius: 8, 
-    padding: 12, 
+    paddingHorizontal: 10,
+    borderWidth: 1,              
+    borderColor: "gray",
     marginVertical: 5 
   },
 
@@ -169,14 +172,15 @@ const styles = StyleSheet.create({
   
   input: { 
     flex: 1, 
-    color: "white" 
+    padding: 12,
+    color: "black" 
   },
   
   button: { 
     backgroundColor: "#007bff", 
     padding: 12, 
     borderRadius: 8, 
-    width: "90%", 
+    width: 200, 
     alignItems: "center", 
     marginTop: 10 
   },

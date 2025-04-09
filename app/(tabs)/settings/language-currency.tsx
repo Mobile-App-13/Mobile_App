@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   heading: {
-    fontSize: 22,
+    fontSize: 25,
     fontWeight: '600',
     color: '#333',
   },

@@ -20,12 +20,12 @@ const AboutUs = () => {
 
       <View style={styles.infoRow}>
         <Icon name="engineering" size={20} color="#555" style={styles.infoIcon} />
-        <Text style={styles.info}>Developed by: Your Team Name</Text>
+        <Text style={styles.info}>Developed by: SL-G13</Text>
       </View>
 
       <View style={styles.infoRow}>
         <Icon name="email" size={20} color="#555" style={styles.infoIcon} />
-        <Text style={styles.info}>Contact: support@example.com</Text>
+        <Text style={styles.info}>Contact: support@slg13.com</Text>
       </View>
 
       
