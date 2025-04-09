@@ -6,8 +6,7 @@ import { db } from "../../firebase/firebaseConfig";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
-import * as ImagePicker from "expo-image-picker";
-import DateTimePicker from "@react-native-community/datetimepicker";
+//import * as ImagePicker from "expo-image-picker";
 
 function addExpenses(){
      
@@ -48,11 +47,22 @@ function addExpenses(){
 
 
 
-   // Handle Date Selection
+   /* Handle Date Selection
    const handleDateChange = (event: any, selectedDate?: Date) => {
       setShowDatePicker(false);
       if (selectedDate) {
         setInvoiceDate(selectedDate.toISOString());
+      }
+  };*/
+
+   // Function to validate and update date
+   const handleDateChange = (text: string) => {
+      const regex = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(\d{4})$/; // Matches DD.MM.YYYY format
+
+      if (regex.test(text)) {
+        setInvoiceDate(text);
+      } else {
+        setInvoiceDate(text); 
       }
   };
 
@@ -143,7 +153,7 @@ function addExpenses(){
       
 
 
-             {/* Date picker */}
+             {/* Date picker 
              <Text>Invoice Date:</Text>
              <TouchableOpacity style={{padding:10}} onPress={() => setShowDatePicker(true)}>
                 <Text>{invoiceDate ? invoiceDate.toDateString() : "Select a date"}</Text>
@@ -157,7 +167,22 @@ function addExpenses(){
                 display="default" 
                 onChange={handleDateChange} 
               />
-        )}
+          )}      */}
+
+
+        <TextInput
+            style={styles.input}
+            placeholder="Invoice Date - DD.MM.YYYY"
+            keyboardType="numeric"
+            value={invoiceDate}
+            onChangeText={handleDateChange}
+            maxLength={10} 
+        />
+        
+
+
+
+
 
       
             {/* Remark */}
@@ -289,6 +314,10 @@ function addExpenses(){
           borderRadius: 10,
           alignItems: "center",
           marginBottom: 10,
+        },
+        label: {
+          fontSize: 16,
+          fontWeight: "bold",
         },
         submitButton: {
           backgroundColor: "#2196F3",
