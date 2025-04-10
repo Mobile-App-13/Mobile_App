@@ -1,22 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";  
 
 
-
-// initial trial data set for delete....................................................................
-const expensesData = [
-    { id: "1", name: "Groceries", price: "$ 50", date:"19.03.2025", icon: "shopping-cart" },
-    { id: "2", name: "Utilities", price: "$ 100", date:"20.03.2025", icon: "lightbulb" },
-    { id: "3", name: "Transportation", price: "$ 30", date:"22.03.2025", icon: "directions-car" },
-    { id: "4", name: "Entertainment", price: "$ 70", date:"24.03.2025", icon: "movie" },
-    { id: "5", name: "Dining Out", price: "$ 40", date:"26.03.2025", icon: "restaurant" },
-    { id: "6", name: "Shopping", price: "$ 80", date:"26.03.2025", icon: "shopping-bag" }, 
-    { id: "7", name: "Health & Fitness", price: "$60", date:"26.03.2025", icon: "fitness-center" },
-    { id: "8", name: "Travel", price: "$ 200", date:"26.03.2025", icon: "flight" },
-    { id: "9", name: "Miscellaneous", price: "$ 20", date:"26.03.2025", icon: "more-horiz" },   
-];
 
 
 
@@ -24,12 +13,39 @@ const expensesData = [
 // this is the main function for the page......................................................
 
 export default function ExpensesScreen() {
-    const [expenses, setExpenses] = useState(expensesData);
+    const [expenses, setExpenses] = useState<{ id: string; [key: string]: any }[]>([]);
 
 
 
 
     const router = useRouter();
+
+
+
+
+ // fetch data of expense from database......................................................   
+    const fetchExpenses = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "personalExpenses"));
+            const expensesList = querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setExpenses(expensesList);
+        } catch (error) {
+            console.error("Error fetching expenses: ", error);
+        }
+    };
+
+
+
+
+
+        // fetch data of expense from database......................................................
+
+    useEffect(() => {
+         fetchExpenses();
+    }, []);
 
     
 
@@ -37,13 +53,13 @@ export default function ExpensesScreen() {
   // retunr part of the page......................................................
 
     return (
-        <View style={{ flex: 1, padding: 10, backgroundColor: "#f5f5f5" }}>
+        <View style={{ flex: 1, padding: 5, backgroundColor: "#f5f5f5",  }}>
         {/* Header Image */}
             <Image
                 source={require("../../../assets/images/PersonalExpenseimage.png")}
-                style={{ width: "100%", height: 400, resizeMode: "cover", borderRadius: 10 }}
+                style={{ width: "100%", height: 350, resizeMode: "cover", borderRadius: 5, marginBottom: 10 }}
                 />
-            <Text style={styles.title}>PERSONEL EXPENSES</Text>
+            <Text style={styles.title}>PERSONEL {"\n"}           EXPENSES</Text>
 
 
 
@@ -70,14 +86,18 @@ export default function ExpensesScreen() {
             >
 
 
-                <MaterialIcons name={item.icon} size={26} color="black" style={{ marginRight: 50, marginLeft:20 }} />
+                <MaterialIcons 
+                    name={item.categoryIcon} 
+                    size={26} 
+                    color="black" 
+                    style={{ marginRight: 50, marginLeft:20 }} />
 
                 <View style ={styles.iconRender}>
-                    <Text style={styles.textRender}>{item.name}</Text>
-                    <Text style={styles.dateRender}>{item.date}</Text>
+                    <Text style={styles.textRender}>{item.remark}</Text>
+                    <Text style={styles.dateRender}>{item.invoiceDate}</Text>
                 </View>
 
-                <Text style={styles.priceRender}>{item.price}</Text>
+                <Text style={styles.priceRender}>€ {item.totalAmount}</Text>
             </TouchableOpacity>
         )}
         />
@@ -98,20 +118,30 @@ export default function ExpensesScreen() {
 const styles = StyleSheet.create({
 
   title: { 
-        fontSize: 24, 
-        fontWeight: "bold", 
-        marginVertical: 10 },
+    fontSize: 40, 
+    fontWeight: "bold", 
+    color: "white",
+    alignItems:"center",
+    position:"absolute",
+    top: 50,
+    left: 60,
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    borderRadius: 15,
+ },
+
   button: {
     backgroundColor: "#007BFF",
     paddingVertical: 20,
-    paddingHorizontal: 10,
+    paddingTop: 20,
+    margin: 20,
     borderRadius: 10,
-    shadowColor: "#000",
+    shadowColor: "black",
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,
   },
   buttonText: {
+    fontSize: 18,
     color: "#fff",
     fontWeight: "bold",
     textAlign: "center",

@@ -3,24 +3,50 @@ import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { Ionicons, FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
+//  logout auth imports .......................
+import { auth } from "../../firebase/firebaseConfig";
+import { signOut } from "firebase/auth";
+
+
 export default function SettingsScreen() {
     const router = useRouter();
+
+
+
+      // handleLogout function for testing purpose only.............................................
+      const handleLogout = async () => {
+        try {
+          await signOut(auth);
+          alert("User logged out successfully!");
+    
+          router.push("/auth_Screens/login")
+    
+        } catch (error) {
+          console.error("Error logging out: ", error);
+        }
+      }
+      //.............................................................
+
+
+
 
     return (
         <ScrollView
         style={{
             flex: 1,
             backgroundColor: 'white',
+            padding: 5,
         }}
         contentContainerStyle={{ paddingBottom: 20 }}
         >
         {/* Header */}
         <View style={{ position: 'relative', width: '100%', height: 150 }}>
             <Image
-                source={require('@/assets/images/Settings.png')} // Replace with local or hosted image
+                source={require('@/assets/images/Settings.png')} 
                 style={{
                 width: '100%',
                 height: '100%',
+                borderRadius: 5,
                 resizeMode: 'cover',
                 }}
             />
@@ -146,8 +172,11 @@ export default function SettingsScreen() {
                 paddingVertical: 12,
                 borderRadius: 24,
                 alignItems: 'center',
-            }}
+            }} 
+            
+            onPress={handleLogout}
             >
+                
             <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Log Out</Text>
             </TouchableOpacity>
         </View>

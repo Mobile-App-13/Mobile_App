@@ -57,7 +57,7 @@ function LoginScreen() {
       {/* 2nd Half*/}
       <View style={{ flex:6, justifyContent:"center", alignItems:"center"}}>
         <View style={styles.inputContainer}>
-          <Ionicons name="mail-outline" size={20} color="white" style={styles.icon} />
+          <Ionicons name="mail-outline" size={20} color="black" style={styles.icon} />
           <TextInput
             placeholder="Email"
             placeholderTextColor="gray"
@@ -68,7 +68,7 @@ function LoginScreen() {
         </View>
       
         <View style={styles.inputContainer}>
-            <Ionicons name="lock-closed-outline" size={20} color="white" style={styles.icon} />
+            <Ionicons name="lock-closed-outline" size={20} color="black" style={styles.icon} />
             <TextInput
               placeholder="Password"
               placeholderTextColor="gray"
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center", 
     justifyContent: "center",
-    backgroundColor:"black"
+    backgroundColor:""
   },
   imageContainer: {
     flexDirection:"column",
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   input: { 
     flex: 1,
     padding: 12, 
-    color: "white"
+    color: "black"
   },
   button: { 
     backgroundColor: "#007bff", 
