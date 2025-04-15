@@ -3,7 +3,7 @@ import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from "react
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";  
+import { db } from "../../../firebase/firebaseConfig";  
 
 
 
@@ -56,8 +56,8 @@ export default function ExpensesScreen() {
         <View style={{ flex: 1, padding: 5, backgroundColor: "#f5f5f5",  }}>
         {/* Header Image */}
             <Image
-                source={require("../../../assets/images/PersonalExpenseimage.png")}
-                style={{ width: "100%", height: 350, resizeMode: "cover", borderRadius: 5, marginBottom: 10 }}
+                source={require("../../../../assets/images/PersonalExpenseimage.png")}
+                style={{ width: "100%", height: 330, resizeMode: "cover", borderRadius: 5, marginBottom: 10 }}
                 />
             <Text style={styles.title}>PERSONEL {"\n"}           EXPENSES</Text>
 
@@ -66,7 +66,7 @@ export default function ExpensesScreen() {
         {/* Add Expense Button */}
         <TouchableOpacity 
             style={styles.button} 
-            onPress={()=>router.push("/(tabs)/expenses/add-expense")}
+            onPress={()=>router.push("/(tabs)/expenses/PersonalExpense/add-expense")}
             
             >
               <Text style={styles.buttonText}>Add a new Expense</Text>
@@ -82,7 +82,7 @@ export default function ExpensesScreen() {
             renderItem={({ item }) => (
             <TouchableOpacity
                 style={styles.detailrow}
-                onPress={()=>router.push(`/(tabs)/expenses/${item.id}`)}
+                onPress={()=>router.push(`/(tabs)/expenses/PersonalExpense/${item.id}`)}
             >
 
 
@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#007BFF",
     paddingVertical: 20,
-    paddingTop: 20,
-    margin: 20,
+    paddingTop: 18,
+    margin: 10,
     borderRadius: 10,
     shadowColor: "black",
     shadowOpacity: 0.2,

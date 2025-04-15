@@ -59,7 +59,7 @@ return (
   <View style={styles.container}>
     <View style={styles.imageContainer}>
       <Image source={require("../../assets/images/loginimage.png")} style={styles.image} />
-      <Text style={styles.title}>EXPENSE{"\n"}        TRACKER</Text>
+      <Text style={styles.title}>EXPENSE{"\n"}      TRACKER</Text>
     </View>
 
     <View style={styles.inputContainer}>
@@ -128,22 +128,24 @@ const styles = StyleSheet.create({
 
   container: { 
     flex: 1, 
-    alignItems: "center", 
-    padding: 20, 
-    backgroundColor: "" 
+    alignItems: "center",  
+    backgroundColor: "",
+    paddingHorizontal: 10 
   },
 
   imageContainer: { 
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",  
+    alignItems: "center",
+    marginBottom: 20,  
     
   },
 
   image: { 
     width: 500,
     height: 400, 
-    resizeMode: "cover", 
+    resizeMode: "cover",
+    borderRadius: 5, 
     
   },
 
@@ -178,21 +180,23 @@ const styles = StyleSheet.create({
   
   button: { 
     backgroundColor: "#007bff", 
-    padding: 12, 
+    padding: 15, 
     borderRadius: 8, 
     width: 200, 
     alignItems: "center", 
-    marginTop: 10 
+    marginTop: 20 
   },
   
   buttonText: { 
     color: "white", 
-    fontWeight: "bold" 
+    fontWeight: "bold",
+    fontSize: 16, 
   },
   
   linkText: { 
-    marginTop: 10, 
-    color: "#007bff" 
+    marginTop: 15, 
+    color: "#007bff",
+    fontSize: 15,  
   },
 });
 

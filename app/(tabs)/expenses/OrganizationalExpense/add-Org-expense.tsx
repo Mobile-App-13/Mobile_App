@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, ScrollView, TouchableOpacity, Image, Alert, StyleSheet } from "react-native";
 
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
+import { db } from "../../../firebase/firebaseConfig";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
@@ -110,7 +110,7 @@ function addExpenses(){
             }
       
             try {
-                await addDoc(collection(db, "personalExpenses"), {
+                await addDoc(collection(db, "OrganizationalExpenses"), {
                     invoiceDate,
                     remark,
                     invoiceDetails,
@@ -123,7 +123,7 @@ function addExpenses(){
                     timestamp: serverTimestamp(),
                 });
                 alert("Expense added successfully");
-                router.push("/(tabs)/expenses");
+                router.push("/(tabs)/expenses/OrganizationalExpense");
             } catch (error) {
                 console.error("Error adding document: ", error);
                 Alert.alert("Error", "Failed to add expense");
@@ -143,10 +143,10 @@ function addExpenses(){
 
           <ScrollView style={{ padding: 10 }}>
             <Image
-                            source={require("../../../assets/images/AddExpense.jpg")}
-                            style={{ width: "100%", height: 350, resizeMode: "cover", borderRadius: 5 }}
+                            source={require("../../../../assets/images/AddExpense.jpg")}
+                            style={{ width: "100%", height: 300, resizeMode: "cover", borderRadius: 5 }}
                             />
-            <Text style={{ fontSize: 40, top:80, left:130, color: "white",alignItems:"center",    position:"absolute",fontWeight: "bold", textAlign: "left", padding: 10, backgroundColor: "rgba(24, 22, 112, 0.23)", }}>ADD {"\n"}       EXPENSE</Text>
+            <Text style={{ fontSize: 40, top:75, left:80, color: "white",alignItems:"center",    position:"absolute",fontWeight: "bold", textAlign: "left", padding: 10, backgroundColor: "rgba(24, 22, 112, 0.23)", }}>ADD {"\n"}       EXPENSE</Text>
 
             <Text style={{ fontSize: 20, color: "black",alignItems:"center",   fontWeight: "bold", textAlign: "left", paddingBottom: 25,  }}>Enter Your Expense Details Here..</Text>
       
@@ -278,7 +278,7 @@ function addExpenses(){
       
             {/* Image Picker */}
             <TouchableOpacity onPress={() => setImageUri(null)} style={styles.uploadButton}>
-                <Text style={{ color: "blue", textAlign: "center" }}>Upload a receipt</Text>
+                <Text style={{ color: "blue", textAlign: "center",fontSize:16 }}>Upload a receipt</Text>
             </TouchableOpacity>
 
 
@@ -286,7 +286,7 @@ function addExpenses(){
       
             {/* Submit Button    */}
             <TouchableOpacity  style={styles.submitButton} onPress={handleSubmit} >
-              <Text style={{ color: "white", textAlign: "center" }}>Enter</Text>
+              <Text style={{ color: "white",fontWeight: "bold" , textAlign: "center", fontSize: 17 }}>Enter</Text>
             </TouchableOpacity>
           </ScrollView>
         );
@@ -300,12 +300,13 @@ function addExpenses(){
 
       const styles = StyleSheet.create({
         input: {
-          height: 50,
+          height: 55,
           borderColor: "#ccc",
+          fontSize: 16,
           borderWidth: 1,
           borderRadius: 10,
           paddingHorizontal: 10,
-          marginBottom: 10,
+          marginBottom: 16,
         },
         uploadButton: {
           padding: 10,
@@ -321,13 +322,16 @@ function addExpenses(){
         },
         submitButton: {
           backgroundColor: "#2196F3",
-          padding: 15,
+          padding: 16,
+          marginBottom: 30,
+          marginTop: 20,
           borderRadius: 10,
           alignItems: "center",
         },
         dropdownButton: { 
             backgroundColor: "#ddd", 
             padding: 10, 
+            marginBottom: 16,
             borderRadius: 5, 
             width: 200, 
             alignItems: "center" 
