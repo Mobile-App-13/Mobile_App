@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, ActivityIndicator } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig"; 
+import { db } from "../../../firebase/firebaseConfig"; 
 
 
 
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        margin: 5,
         backgroundColor: "#fff",
         borderWidth: 1,
         borderRadius: 10,

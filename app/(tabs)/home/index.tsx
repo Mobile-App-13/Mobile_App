@@ -24,7 +24,7 @@ function HomeScreen () {
 
       
       
-      <Text style={styles.title}>EXPENSE TRACKER</Text>
+      <Text style={styles.title}>EXPENSE {"\n"}     TRACKER</Text>
       <Text style={styles.subtitle}>We Remember For You...!</Text>
       <Text style={styles.description}>
         Record your daily expenses on a personal and organizational basis. At the end of the month, generate reports with invoices.
@@ -32,11 +32,11 @@ function HomeScreen () {
 
       
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => router.push("/(tabs)/expenses")}>
+        <TouchableOpacity style={styles.button} onPress={() => router.push("/(tabs)/expenses/PersonalExpense")}>
           <Text style={styles.buttonText}>Personal {"\n"} Expenses</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => router.push("/(tabs)/expenses")}>
+        <TouchableOpacity style={styles.button} onPress={() => router.push("/(tabs)/expenses/OrganizationalExpense")}>
           <Text style={styles.buttonText}>Organizational {"\n"} Expenses</Text>
         </TouchableOpacity>
       </View>
@@ -68,14 +68,14 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
   },
   title: {
-    fontSize: 40,
+    fontSize: 50,
     fontWeight: "bold",
     color: "white",
     alignItems:"center",
     position:"absolute",
     padding: 20,
-    top: 75,
-    left: 60,
+    top: 65,
+    left: 40,
     backgroundColor: "rgba(0, 0, 0, 0.4)",
     borderRadius: 15,
  
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     color: "white",
     alignItems:"center",
     position:"absolute",
-    top: 205,
+    top: 210,
     left: 155,
     backgroundColor: "rgba(0, 0, 0, 0.4)",
   },
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     width: "100%",
-    marginTop: 40,
+    marginTop: 30,
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 18,
@@ -115,7 +115,9 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: "center",
     backgroundColor: "#007BFF",
-    padding: 20,
+    padding: 18,
+    borderColor: "rgba(36, 24, 143, 0.66)",
+    borderWidth: 2,
     borderRadius: 10,
     justifyContent: "center",
     shadowColor: "black",

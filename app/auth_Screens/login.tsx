@@ -30,7 +30,7 @@ function LoginScreen() {
       const user = userCredential.user;
       const token = await getIdToken(user);
 
-      alert("User logged in successfully!");
+      //alert("User logged in successfully!");
 
       router.push("/(tabs)/home");
 
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center", 
     justifyContent: "center",
-    backgroundColor:""
+    backgroundColor:"",
+    paddingHorizontal: 10,
   },
   imageContainer: {
     flexDirection:"column",
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
     width: 500,
     height: 400,
     resizeMode: "cover",
+    borderRadius: 5,
     
   },
   title: { 
@@ -140,19 +142,21 @@ const styles = StyleSheet.create({
   },
   button: { 
     backgroundColor: "#007bff", 
-    padding: 12, 
+    padding: 15, 
     borderRadius: 8, 
     width: 200, 
     alignItems: "center", 
-    marginTop: 10 
+    marginTop: 40 
   },
   buttonText: { 
     color: "white", 
-    fontWeight: "bold" 
+    fontWeight: "bold",
+    fontSize: 16,  
   },
   linkText: { 
-    marginTop: 10, 
-    color: "#007bff" 
+    marginTop: 15, 
+    color: "#007bff",
+    fontSize: 15, 
   },
 });
 
