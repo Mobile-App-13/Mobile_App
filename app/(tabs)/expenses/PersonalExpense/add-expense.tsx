@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { View, Text, TextInput, ScrollView, TouchableOpacity, Image, Alert, StyleSheet } from "react-native";
 
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../../firebase/firebaseConfig";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db, storage } from "../../../firebase/firebaseConfig";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { v4 as uuidv4 } from 'uuid'; // for unique filename
 
-//import * as ImagePicker from "expo-image-picker";
+
+
+import * as MediaLibrary from 'expo-media-library';
+import * as ImagePicker from "expo-image-picker";
 
 function addExpenses(){
      
@@ -26,6 +31,8 @@ function addExpenses(){
     const [taxPercentage, setTaxPercentage] = useState("");
     const [totalAmount, setTotalAmount] = useState("");
     const [imageUri, setImageUri] = useState<string | null>(null);
+    const [firebaseImageUrl, setFirebaseImageUrl] = useState<string | null>(null);
+
 
 
     const router = useRouter();
@@ -38,7 +45,7 @@ function addExpenses(){
     const categories = [
         { name: "Shopping", icon: "shopping-cart" },
         { name: "Food", icon: "restaurant" },
-        { name: "Transport", icon: "directions-car" },
+        { name: "Fuel", icon: "local-gas-station" },
         { name: "Utilities", icon: "lightbulb" },
         { name: "Health & Fitness", icon: "fitness-center" },
         { name: "Travel", icon: "flight" },
@@ -46,14 +53,6 @@ function addExpenses(){
       ];
 
 
-
-   /* Handle Date Selection
-   const handleDateChange = (event: any, selectedDate?: Date) => {
-      setShowDatePicker(false);
-      if (selectedDate) {
-        setInvoiceDate(selectedDate.toISOString());
-      }
-  };*/
 
    // Function to validate and update date
    const handleDateChange = (text: string) => {
@@ -67,20 +66,55 @@ function addExpenses(){
   };
 
 
-  /* Open Image Picker
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-    });
 
-    if (!result.canceled) {
-        setImageUri(result.assets[0].uri);
+
+
+  // Open Image Picker..................................................................
+  const openCameraAndUpload = async () => {
+  const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+  const mediaPermission = await MediaLibrary.requestPermissionsAsync();
+
+  if (permissionResult.granted === false || mediaPermission.granted === false) {
+    Alert.alert("Permission required", "Camera and storage access are needed.");
+    return;
+  }
+
+  const result = await ImagePicker.launchCameraAsync({
+    allowsEditing: true,
+    quality: 0.5,
+  });
+
+  if (!result.canceled && result.assets?.[0]?.uri) {
+    const uri = result.assets[0].uri;
+    setImageUri(uri);
+
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      const filename = uuidv4() + ".jpg";
+
+      const storageRef = ref(storage, `receipts/${filename}`);
+      await uploadBytes(storageRef, blob);
+
+      const downloadURL = await getDownloadURL(storageRef);
+      setFirebaseImageUrl(downloadURL); // Save the download URL to state or Firestore
+      console.log("Uploaded to Firebase:", downloadURL);
+
+      Alert.alert("Upload Success", "Receipt uploaded successfully!");
+      // Optional: save downloadURL in your Firestore expense document
+    } catch (error) {
+      console.error("Upload failed:", error);
+      Alert.alert("Upload Error", "Something went wrong!");
     }
-  };  */
+  }
+  };
+
+  // camera function end................................................
+
       
+
+
+
 
 // Category Picker function..................................................
     const handleSelect = (category: { name: string; icon: string }) => {
@@ -119,7 +153,7 @@ function addExpenses(){
                     amountWithoutTax: parseFloat(amountWithoutTax),
                     taxPercentage: parseFloat(taxPercentage),
                     totalAmount: parseFloat(totalAmount),
-                    image: imageUri || null,
+                    image: firebaseImageUrl || null,
                     timestamp: serverTimestamp(),
                 });
                 alert("Expense added successfully");
@@ -132,6 +166,8 @@ function addExpenses(){
 
     
       
+
+
 
 
 
@@ -151,23 +187,6 @@ function addExpenses(){
             <Text style={{ fontSize: 20, color: "black",alignItems:"center",   fontWeight: "bold", textAlign: "left", paddingBottom: 25,  }}>Enter Your Expense Details Here..</Text>
       
       
-
-
-             {/* Date picker 
-             <Text>Invoice Date:</Text>
-             <TouchableOpacity style={{padding:10}} onPress={() => setShowDatePicker(true)}>
-                <Text>{invoiceDate ? invoiceDate.toDateString() : "Select a date"}</Text>
-             </TouchableOpacity>
-
-
-            {showDatePicker && (
-              <DateTimePicker 
-                value={invoiceDate || new Date()}  
-                mode="date" 
-                display="default" 
-                onChange={handleDateChange} 
-              />
-          )}      */}
 
 
         <TextInput
@@ -277,9 +296,17 @@ function addExpenses(){
 
       
             {/* Image Picker */}
-            <TouchableOpacity onPress={() => setImageUri(null)} style={styles.uploadButton}>
+            <TouchableOpacity onPress={openCameraAndUpload} style={styles.uploadButton}>
                 <Text style={{ color: "blue", textAlign: "center",fontSize:16 }}>Upload a receipt</Text>
             </TouchableOpacity>
+
+
+            {imageUri && (
+              <Image
+                source={{ uri: imageUri }}
+                style={{ width: 200, height: 200, marginTop: 10, borderRadius: 10 }}
+              />
+            )}
 
 
 
