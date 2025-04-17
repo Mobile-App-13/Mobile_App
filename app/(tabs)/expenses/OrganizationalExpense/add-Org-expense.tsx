@@ -123,7 +123,7 @@ function addExpenses(){
                     timestamp: serverTimestamp(),
                 });
                 alert("Expense added successfully");
-                router.push("/(tabs)/expenses/OrganizationalExpense");
+                router.push("/expenses/OrganizationalExpense");
             } catch (error) {
                 console.error("Error adding document: ", error);
                 Alert.alert("Error", "Failed to add expense");

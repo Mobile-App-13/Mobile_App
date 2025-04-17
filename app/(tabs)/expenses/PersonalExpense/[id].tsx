@@ -146,11 +146,11 @@ const styles = StyleSheet.create({
         fontSize: 26,
         fontWeight: "bold",
         textAlign: "center",
-        backgroundColor: "rgba(19, 24, 100, 0.28)",
+        backgroundColor: "rgba(1, 36, 77, 0.92)",
         borderRadius: 10,
         padding: 15,
         marginBottom: 25,
-        color: "#333",
+        color: "white",
     },
     row: {
         flexDirection: "row",

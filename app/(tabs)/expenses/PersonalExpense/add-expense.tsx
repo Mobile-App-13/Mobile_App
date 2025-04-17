@@ -12,7 +12,7 @@ function addExpenses(){
      
 
     const [invoiceDate, setInvoiceDate] = useState<Date | string>("");
-    const [showDatePicker, setShowDatePicker] = useState(false);
+    //const [showDatePicker, setShowDatePicker] = useState(false);
 
     const [remark, setRemark] = useState("");
     const [invoiceDetails, setInvoiceDetails] = useState({
@@ -67,7 +67,7 @@ function addExpenses(){
   };
 
 
-  // Open Image Picker
+  /* Open Image Picker
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -79,7 +79,7 @@ function addExpenses(){
     if (!result.canceled) {
         setImageUri(result.assets[0].uri);
     }
-  };  
+  };  */
       
 
 // Category Picker function..................................................
@@ -123,7 +123,7 @@ function addExpenses(){
                     timestamp: serverTimestamp(),
                 });
                 alert("Expense added successfully");
-                router.push("/(tabs)/expenses/PersonalExpense");
+                router.push("/expenses/PersonalExpense");
             } catch (error) {
                 console.error("Error adding document: ", error);
                 Alert.alert("Error", "Failed to add expense");
