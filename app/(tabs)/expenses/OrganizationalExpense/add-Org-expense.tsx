@@ -35,14 +35,17 @@ function addExpenses(){
 
 
 // defined categories for the Dropdown menu...................................
+
     const categories = [
-        { name: "Shopping", icon: "shopping-cart" },
-        { name: "Food", icon: "restaurant" },
-        { name: "Transport", icon: "directions-car" },
+       
+        { name: "Fuel", icon: "local-gas-station" },
         { name: "Utilities", icon: "lightbulb" },
-        { name: "Health & Fitness", icon: "fitness-center" },
-        { name: "Travel", icon: "flight" },
+        { name: "Office Supplies", icon: "local-post-office" },
+        { name: "Equipment", icon: "build" },
+        { name: "Insurance", icon: "shield" },
+        { name: "Salaries", icon: "attach-money" },
         { name: "Miscellaneous", icon: "more-horiz" },
+
       ];
 
 
@@ -67,7 +70,7 @@ function addExpenses(){
   };
 
 
-  // Open Image Picker
+  /* Open Image Picker
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -79,7 +82,7 @@ function addExpenses(){
     if (!result.canceled) {
         setImageUri(result.assets[0].uri);
     }
-  };  
+  };  */
       
 
 // Category Picker function..................................................
