@@ -66,7 +66,7 @@ export default function ExpensesScreen() {
         {/* Add Expense Button */}
         <TouchableOpacity 
             style={styles.button} 
-            onPress={()=>router.push("/(tabs)/expenses/OrganizationalExpense/add-Org-expense")}
+            onPress={()=>router.push("/expenses/OrganizationalExpense/add-Org-expense")}
             
             >
               <Text style={styles.buttonText}>Add a new Expense</Text>
@@ -82,7 +82,7 @@ export default function ExpensesScreen() {
             renderItem={({ item }) => (
             <TouchableOpacity
                 style={styles.detailrow}
-                onPress={()=>router.push(`/(tabs)/expenses/OrganizationalExpense/${item.id}`)}
+                onPress={()=>router.push(`/expenses/OrganizationalExpense/${item.id}`)}
             >
 
 

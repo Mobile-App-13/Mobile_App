@@ -17,7 +17,7 @@ export default function SettingsScreen() {
       const handleLogout = async () => {
         try {
           await signOut(auth);
-          alert("User logged out successfully!");
+          //alert("User logged out successfully!");
     
           router.push("/auth_Screens/login")
     

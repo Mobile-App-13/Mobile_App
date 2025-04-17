@@ -32,11 +32,12 @@ function HomeScreen () {
 
       
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => router.push("/(tabs)/expenses/PersonalExpense")}>
+
+        <TouchableOpacity style={styles.button} onPress={() => router.push("/(tabs)/expenses?type=personal")}>
           <Text style={styles.buttonText}>Personal {"\n"} Expenses</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => router.push("/(tabs)/expenses/OrganizationalExpense")}>
+        <TouchableOpacity style={styles.button} onPress={() => router.push("/(tabs)/expenses?type=org")}>
           <Text style={styles.buttonText}>Organizational {"\n"} Expenses</Text>
         </TouchableOpacity>
       </View>
