@@ -6,7 +6,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../../firebase/firebaseConfig";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { v4 as uuidv4 } from 'uuid'; // for unique filename
+
 
 
 
@@ -91,9 +91,9 @@ function addExpenses(){
     try {
       const response = await fetch(uri);
       const blob = await response.blob();
-      const filename = uuidv4() + ".jpg";
+      const filename = Date.now().toString();
 
-      const storageRef = ref(storage, `receipts/${filename}`);
+      const storageRef = ref(storage, `receipts/${filename}.jpg`);
       await uploadBytes(storageRef, blob);
 
       const downloadURL = await getDownloadURL(storageRef);
@@ -156,7 +156,7 @@ function addExpenses(){
                     image: firebaseImageUrl || null,
                     timestamp: serverTimestamp(),
                 });
-                alert("Expense added successfully");
+                //alert("Expense added successfully");
                 router.push("/expenses/PersonalExpense");
             } catch (error) {
                 console.error("Error adding document: ", error);
