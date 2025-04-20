@@ -215,7 +215,7 @@ const AnalysisScreen = () => {
         style: {
             borderRadius: 16,
             shadowColor: "black",
-            shadowOpacity: 0.9,
+            shadowOpacity: 0.9
 
         },
         propsForDots: {
@@ -265,7 +265,8 @@ const AnalysisScreen = () => {
                     data={barchartData}
                     width={screenWidth-12 }
                     height={250}
-                    //withCustomBarColorFromData={true}
+                    yAxisLabel="€"
+                    yAxisSuffix=""
                     chartConfig={{
                         backgroundGradientFrom: "rgb(169, 202, 240)",
                         backgroundGradientTo: "rgb(56, 100, 141)",
@@ -282,9 +283,7 @@ const AnalysisScreen = () => {
                             fontWeight: "bold",
                             color: "rgba(0, 0, 0, 0.92)",
                         },
-                                                
-                        
-                        
+                                                            
                     }}
                 />
                     

@@ -193,7 +193,7 @@ function addExpenses(){
             style={styles.input}
             placeholder="Invoice Date - DD.MM.YYYY"
             keyboardType="numeric"
-            value={invoiceDate}
+            value={typeof invoiceDate === "string" ? invoiceDate : invoiceDate.toISOString().split("T")[0]}
             onChangeText={handleDateChange}
             maxLength={10} 
         />
