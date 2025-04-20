@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy} from "firebase/firestore";
 import { db } from "../../../firebase/firebaseConfig";  
 
 
@@ -26,7 +26,12 @@ export default function ExpensesScreen() {
  // fetch data of expense from database......................................................   
     const fetchExpenses = async () => {
         try {
-            const querySnapshot = await getDocs(collection(db, "OrganizationalExpenses"));
+            const q = query(
+                collection(db, "OrganizationalExpenses"),
+                orderBy("timestamp", "desc")
+            )
+
+            const querySnapshot = await getDocs(q);
             const expensesList = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
