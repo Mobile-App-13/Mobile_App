@@ -7,7 +7,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig"; 
-
+import { useTheme } from "../../context/ThemeContext"; // Adjusted path to match the correct location
 
 
 
@@ -75,6 +75,7 @@ const barchartData = {
 
 const AnalysisScreen = () => {
     const screenWidth  = Dimensions.get('window').width;
+    const { isDarkMode } = useTheme();// get dark mode status
 
 // Pie chart data set here..............................................
     const [chartData, setChartData] = useState<{ name: string; cost: number; color: string; legendFontColor: string; legendFontSize: number; }[]>([]);
@@ -153,7 +154,7 @@ const AnalysisScreen = () => {
         };
     
         fetchData();
-    }, []);
+    }, [isDarkMode]);
 
 
 
@@ -206,25 +207,20 @@ const AnalysisScreen = () => {
 
     
     const chartConfig = {
-        backgroundColor: "rgb(255, 255, 255)",
-        backgroundGradientFrom: "rgb(134, 180, 223)",
-        backgroundGradientTo: "rgb(51, 87, 121)",
-        
-        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        backgroundColor: isDarkMode ? "#1a1a1a" : "#ffffff",
+        backgroundGradientFrom: isDarkMode ? "#333" : "#a0c0f0",
+        backgroundGradientTo: isDarkMode ? "#000" : "#4f6c90",
+        color: (opacity = 1) => (isDarkMode ? `rgba(255,255,255,${opacity})` : `rgba(0,0,0,${opacity})`),
+        labelColor: (opacity = 1) => (isDarkMode ? `#fff` : `#000`),
         style: {
-            borderRadius: 16,
-            shadowColor: "black",
-            shadowOpacity: 0.9
-
+          borderRadius: 16,
         },
         propsForDots: {
-            r: "6",
-            strokeWidth: "2",
-            stroke: "#fff",
+          r: "6",
+          strokeWidth: "2",
+          stroke: "#fff",
         },
-    };
-
+      };
     // pie chart end here......................................................
 
 
@@ -237,14 +233,14 @@ const AnalysisScreen = () => {
 
         <ScrollView style={{ flex: 1, padding: 5, backgroundColor: "rgba(226, 239, 253, 0.92)", borderColor: "rgba(0, 0, 0, 0.86)", borderWidth: 1, borderRadius: 10, shadowColor: "black", shadowOpacity: 0.1, shadowOffset: { width: 0, height: 2 }, shadowRadius: 5 }}>
 
-            <Text style={styles.title}>REPORT & ANALYTICS</Text>
+            <Text style={createStyles(isDarkMode).title}>REPORT & ANALYTICS</Text>
 
 
 
 
             
             {/*   pie chart return in page ...................................... */}
-                <Text style={styles.piechartHeader}>Current Month Expenses{"\n"}</Text>
+                <Text style={createStyles(isDarkMode).piechartHeader}>Current Month Expenses{"\n"}</Text>
                 <PieChart
                     data={chartData}
                     width={screenWidth - 12}
@@ -260,7 +256,7 @@ const AnalysisScreen = () => {
 
 
             {/*   bar chart return in page ...................................... */}
-                <Text style={styles.barchartHeader}>Monthly Expenses Comparison</Text>
+                <Text style={createStyles(isDarkMode).barchartHeader}>Monthly Expenses Comparison</Text>
                 <BarChart
                     data={barchartData}
                     width={screenWidth-12 }
@@ -289,12 +285,12 @@ const AnalysisScreen = () => {
                     
             {/* bar chart code end here..........................................*/}
 
-            <View style={styles.bottomcontainer}>
+            <View style={createStyles(isDarkMode).bottomcontainer}>
       {/* Start Date */}
-                <Text style={styles.label}>Start Date</Text>
-                    <TouchableOpacity style={styles.input} onPress={() => setShowStartPicker(true)}>
+                <Text style={createStyles(isDarkMode).label}>Start Date</Text>
+                    <TouchableOpacity style={createStyles(isDarkMode).input} onPress={() => setShowStartPicker(true)}>
                         <Ionicons name="calendar" size={24} color="#0054b4" />
-                        <Text style={styles.inputText}>
+                        <Text style={createStyles(isDarkMode).inputText}>
                         {startDate ? startDate.toDateString() : " "}
                         </Text>
                     </TouchableOpacity>
@@ -312,10 +308,10 @@ const AnalysisScreen = () => {
                 )}
 
             {/* End Date */}
-                <Text style={styles.label}>End Date</Text>
-                <TouchableOpacity style={styles.input} onPress={() => setShowEndPicker(true)}>
+                <Text style={createStyles(isDarkMode).label}>End Date</Text>
+                <TouchableOpacity style={createStyles(isDarkMode).input} onPress={() => setShowEndPicker(true)}>
                     <Ionicons name="calendar" size={24} color="#0054b4" />
-                    <Text style={styles.inputText}>
+                    <Text style={createStyles(isDarkMode).inputText}>
                     {endDate ? endDate.toDateString() : " "}
                     </Text>
                 </TouchableOpacity>
@@ -332,7 +328,7 @@ const AnalysisScreen = () => {
                 )}
 
                     {/* Dropdown Filter */}
-                    <Text style={styles.label}>Filter By</Text>
+                    <Text style={createStyles(isDarkMode).label}>Filter By</Text>
                     <DropDownPicker
                         open={open}
                         value={value}
@@ -341,13 +337,13 @@ const AnalysisScreen = () => {
                         setValue={setValue}
                         setItems={setItems}
                         placeholder="Select..."
-                        style={styles.dropdown}
+                        style={createStyles(isDarkMode).dropdown}
                         dropDownContainerStyle={{ borderColor: "#ccc" }}
                     />
 
                     {/* Button */}
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Generate Report</Text>
+                    <TouchableOpacity style={createStyles(isDarkMode).button}>
+                        <Text style={createStyles(isDarkMode).buttonText}>Generate Report</Text>
                     </TouchableOpacity>
             </View>
             
@@ -363,91 +359,78 @@ const AnalysisScreen = () => {
 
 
 
-const styles = StyleSheet.create({
+const createStyles = (isDarkMode: boolean) =>
+  StyleSheet.create({
+    title: {
+      fontSize: 40,
+      fontWeight: "bold",
+      color: isDarkMode ? "#fff" : "white",
+      textAlign: "center",
+      backgroundColor: isDarkMode ? "#1c1c1e" : "rgba(1, 36, 77, 0.92)",
+      padding: 12,
+    },
+    piechartHeader: {
+      fontSize: 20,
+      fontWeight: "bold",
+      textAlign: "left",
+      paddingTop: 15,
+      backgroundColor: isDarkMode ? "#2c2c2e" : "rgba(87, 129, 177, 0.92)",
+      color: isDarkMode ? "#fff" : "#000",
+    },
+    barchartHeader: {
+      fontSize: 20,
+      fontWeight: "bold",
+      textAlign: "left",
+      paddingTop: 15,
+      backgroundColor: isDarkMode ? "#2c2c2e" : "rgba(42, 83, 110, 0.92)",
+      color: isDarkMode ? "#fff" : "#000",
+    },
+    bottomcontainer: {
+      flex: 1,
+      padding: 10,
+      backgroundColor: isDarkMode ? "#1a1a1a" : "rgba(226, 239, 253, 0.92)",
+    },
+    label: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: isDarkMode ? "#fff" : "purple",
+      marginTop: 10,
+      marginBottom: 5,
+    },
+    input: {
+      backgroundColor: isDarkMode ? "#2c2c2e" : "#e0e7f1",
+      padding: 10,
+      borderRadius: 8,
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 10,
+    },
+    inputText: {
+      fontSize: 16,
+      color: isDarkMode ? "#fff" : "#333",
+    },
+    dropdown: {
+      backgroundColor: isDarkMode ? "#2c2c2e" : "#e0e7f1",
+      borderColor: "#ccc",
+      borderRadius: 8,
+      marginBottom: 15,
+      marginTop: 5,
+    },
+    button: {
+      backgroundColor: "#1890ff",
+      padding: 15,
+      borderRadius: 10,
+      alignItems: "center",
+      marginTop: 15,
+    },
+    buttonText: {
+      color: "#fff",
+      fontWeight: "bold",
+      fontSize: 16,
+    },
+  });
 
-  title: { 
-    fontSize: 40, 
-    fontWeight: "bold",
-    color: "white", 
-    alignItems:"center",
-    textAlign:"center",
-    backgroundColor: "rgba(1, 36, 77, 0.92)",
-    padding: 12,
- },
-   piechartHeader: { 
-    fontSize: 20, 
-    fontWeight: "bold", 
-    textAlign: "left",
-    paddingTop: 15,
-    backgroundColor: "rgba(87, 129, 177, 0.92)",
- },
-   
-    piechartcontainer:{ 
-     backgroundColor: "rgb(60, 120, 168)",
-     borderRadius: 5, 
-     marginVertical: 5,
-     shadowColor: "black",
-     borderWidth: 5,
-     borderColor: "rgba(0, 0, 0, 0.86)",
-     shadowOpacity: 0.1,
-     shadowOffset: { width: 0, height: 2 },
-     shadowRadius: 5,
-     },
-     barchartHeader: {
-        fontSize: 20, 
-        fontWeight: "bold", 
-        textAlign: "left",
-        paddingTop: 15,
-        backgroundColor: "rgba(42, 83, 110, 0.92)",
- },
-
-  bottomcontainer: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: "rgba(226, 239, 253, 0.92)",
-  },
- 
-  label: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "purple",
-    marginTop: 10,
-    marginBottom: 5,
-  },
-  input: {
-    backgroundColor: "#e0e7f1",
-    padding: 10,
-    borderRadius: 8,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  inputText: {
-    fontSize: 16,
-    color: "#333",
-  },
-  dropdown: {
-    backgroundColor: "#e0e7f1",
-    borderColor: "#ccc",
-    borderRadius: 8,
-    marginBottom: 15,
-    marginTop: 5,
-  },
-  button: {
-    backgroundColor: "#1890ff",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 15,
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-
-})
-
+// Duplicate declaration removed
 
 
 

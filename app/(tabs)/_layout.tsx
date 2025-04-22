@@ -2,28 +2,31 @@ import { Tabs } from "expo-router";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
+import { ThemeProvider } from "../context/ThemeContext";
+
 
 
 function TabLayOut(){
 
     return(
-        <Tabs>
-            <Tabs.Screen name="home/index" options={{
+        <ThemeProvider>
+            <Tabs>
+                <Tabs.Screen name="home/index" options={{
                 title:'home',
                 tabBarIcon: ({size,color})=>(<AntDesign name="home" size={size} color={color} />),
                 headerShown:false
                 }} />
-            <Tabs.Screen name="expenses" options={{
+                <Tabs.Screen name="expenses" options={{
                 title:'Expenses',
                 tabBarIcon: ({size,color})=>(<Ionicons name="wallet-outline" size={size} color={color} />),
                 headerShown:false
                 }} />
-            <Tabs.Screen name="analysis/index" options={{
+                <Tabs.Screen name="analysis/index" options={{
                 title:'Analysis',
                 tabBarIcon: ({size,color})=>(<AntDesign name="linechart" size={size} color={color} />),
                 headerShown:false
                 }} />
-            <Tabs.Screen name="settings" options={{
+                <Tabs.Screen name="settings" options={{
                 title:'Settings',
                 tabBarIcon: ({size,color})=>(<Feather name="settings" size={size} color={color} />),
                 headerShown:false
@@ -31,7 +34,8 @@ function TabLayOut(){
             
             
 
-        </Tabs>
+            </Tabs>
+        </ThemeProvider>
     )
 }
 

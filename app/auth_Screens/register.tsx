@@ -1,8 +1,8 @@
 // react imports 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useRouter } from "expo-router";
-
+import { ThemeContext } from "../context/ThemeContext";
 
 
 
@@ -20,7 +20,10 @@ function SignupScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const themeContext = useContext(ThemeContext);
+  const isDarkMode = themeContext?.isDarkMode ?? false;
 
+  const styles = getStyles(isDarkMode);
 
 
 
@@ -59,144 +62,117 @@ return (
   <View style={styles.container}>
     <View style={styles.imageContainer}>
       <Image source={require("../../assets/images/loginimage.png")} style={styles.image} />
-      <Text style={styles.title}>EXPENSE{"\n"}      TRACKER</Text>
+      <Text style={styles.title}>EXPENSE{"\n"} TRACKER</Text>
     </View>
 
     <View style={styles.inputContainer}>
-
-      <MaterialIcons 
-      name="person" 
-      size={20} 
-      color="black" 
-      style={styles.icon} />
-
-      <TextInput 
-      placeholder="Firstname Lastname" 
-      value={name} onChangeText={setName} 
-      style={styles.input} 
-      placeholderTextColor="#aaa" />
-
+      <MaterialIcons name="person" size={20} color={isDarkMode ? "#ccc" : "black"} style={styles.icon} />
+      <TextInput
+        placeholder="Firstname Lastname"
+        value={name}
+        onChangeText={setName}
+        style={styles.input}
+        placeholderTextColor={isDarkMode ? "#aaa" : "#888"}
+      />
     </View>
 
     <View style={styles.inputContainer}>
-
-      <MaterialIcons 
-      name="email" size={20} 
-      color="black" 
-      style={styles.icon} />
-
-      <TextInput 
-      placeholder="Email" 
-      value={email} 
-      onChangeText={setEmail} 
-      style={styles.input} 
-      placeholderTextColor="#aaa" />
-
+      <MaterialIcons name="email" size={20} color={isDarkMode ? "#ccc" : "black"} style={styles.icon} />
+      <TextInput
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        style={styles.input}
+        placeholderTextColor={isDarkMode ? "#aaa" : "#888"}
+      />
     </View>
-    
+
     <View style={styles.inputContainer}>
-
-      <MaterialIcons 
-      name="lock" 
-      size={20} 
-      color="black" 
-      style={styles.icon} />
-
-      <TextInput 
-      placeholder="Password" 
-      value={password} 
-      onChangeText={setPassword} 
-       style={styles.input} 
-       placeholderTextColor="#aaa" />
-
+      <MaterialIcons name="lock" size={20} color={isDarkMode ? "#ccc" : "black"} style={styles.icon} />
+      <TextInput
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        style={styles.input}
+        placeholderTextColor={isDarkMode ? "#aaa" : "#888"}
+        secureTextEntry
+      />
     </View>
 
     <TouchableOpacity style={styles.button} onPress={handleRegister}>
-
       <Text style={styles.buttonText}>Sign Up</Text>
-
     </TouchableOpacity>
 
-    <TouchableOpacity onPress={() => router.push('/auth_Screens/login')}>
+    <TouchableOpacity onPress={() => router.push("/auth_Screens/login")}>
       <Text style={styles.linkText}>I have an account already</Text>
     </TouchableOpacity>
   </View>
 );
-};
+}
 
-const styles = StyleSheet.create({
-
-  container: { 
-    flex: 1, 
-    alignItems: "center",  
-    backgroundColor: "",
-    paddingHorizontal: 10 
+const getStyles = (isDarkMode: boolean) =>
+StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: isDarkMode ? "#000" : "#fff",
+    paddingHorizontal: 10,
   },
-
-  imageContainer: { 
+  imageContainer: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,  
-    
+    marginBottom: 20,
   },
-
-  image: { 
+  image: {
     width: 500,
-    height: 400, 
+    height: 400,
     resizeMode: "cover",
-    borderRadius: 5, 
-    
+    borderRadius: 5,
   },
-
-  title: { 
-    fontSize: 60, 
-    fontWeight: "bold", 
+  title: {
+    fontSize: 60,
+    fontWeight: "bold",
     color: "white",
     textAlign: "center",
-    position:"absolute"
+    position: "absolute",
   },
-
   inputContainer: {
-    flexDirection: "row", 
-    alignItems: "center", 
-    width: "90%", 
-    borderRadius: 8, 
+    flexDirection: "row",
+    alignItems: "center",
+    width: "90%",
+    borderRadius: 8,
     paddingHorizontal: 10,
-    borderWidth: 1,              
-    borderColor: "gray",
-    marginVertical: 5 
+    borderWidth: 1,
+    borderColor: isDarkMode ? "#555" : "gray",
+    backgroundColor: isDarkMode ? "#111" : "#fff",
+    marginVertical: 5,
   },
-
-  icon: { 
-    marginRight: 10 
+  icon: {
+    marginRight: 10,
   },
-  
-  input: { 
-    flex: 1, 
+  input: {
+    flex: 1,
     padding: 12,
-    color: "black" 
+    color: isDarkMode ? "#fff" : "#000",
   },
-  
-  button: { 
-    backgroundColor: "#007bff", 
-    padding: 15, 
-    borderRadius: 8, 
-    width: 200, 
-    alignItems: "center", 
-    marginTop: 20 
+  button: {
+    backgroundColor: "#007bff",
+    padding: 15,
+    borderRadius: 8,
+    width: 200,
+    alignItems: "center",
+    marginTop: 20,
   },
-  
-  buttonText: { 
-    color: "white", 
+  buttonText: {
+    color: "white",
     fontWeight: "bold",
-    fontSize: 16, 
+    fontSize: 16,
   },
-  
-  linkText: { 
-    marginTop: 15, 
+  linkText: {
+    marginTop: 15,
     color: "#007bff",
-    fontSize: 15,  
+    fontSize: 15,
   },
 });
 
