@@ -1,10 +1,12 @@
 import { Redirect } from "expo-router";
+import { ThemeProvider } from "./context/ThemeContext"; // Adjusted the path
 
 function App() {
-    return (
-    
-        <Redirect href= {`/auth_Screens/login`} />
-    )
+  return (
+    <ThemeProvider>
+      <Redirect href="/auth_Screens/login" />
+    </ThemeProvider>
+  );
 }
 
 export default App;
