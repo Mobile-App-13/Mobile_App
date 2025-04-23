@@ -24,7 +24,7 @@ function TabLayout() {
         tabBarStyle: {
           backgroundColor: colors.card,
         },
-        tabBarActiveTintColor: isDarkMode ? "#007bff" : String(colors.primary),
+        tabBarActiveTintColor: isDarkMode ? "#007bff" : "#007bff",
         tabBarInactiveTintColor: colors.text,
         headerStyle: {
           backgroundColor: colors.card,
