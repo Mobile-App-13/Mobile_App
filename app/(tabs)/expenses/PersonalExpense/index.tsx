@@ -3,7 +3,9 @@ import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from "react
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { collection, getDocs,query, orderBy } from "firebase/firestore";
-import { db } from "../../../firebase/firebaseConfig";  
+import { db } from "../../../firebase/firebaseConfig"; 
+import { getAuth } from "firebase/auth";  // for create individual collection for each user
+
 
 
 
@@ -25,9 +27,17 @@ export default function ExpensesScreen() {
 
  // fetch data of expense from database......................................................   
     const fetchExpenses = async () => {
+
+        const auth = getAuth(); 
+        const user = auth.currentUser; // Get the currently logged-in user
+        if (!user) {
+            return;
+        }
+        const userId = user.uid; // Get the user's unique ID
+        
         try {
             const q = query(
-                collection(db, "personalExpenses"),
+                collection(db, "users", userId, "personalExpenses"), // Create a sub-collection for each user
 
                 // order by("timestamp", "desc") when fetching data from firebase
                 orderBy("timestamp", "desc")
