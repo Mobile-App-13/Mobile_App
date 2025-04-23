@@ -4,6 +4,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { collection, getDocs, query, orderBy} from "firebase/firestore";
 import { db } from "../../../firebase/firebaseConfig";  
+import { getAuth } from "firebase/auth";  // for create individual collection for each user
 
 
 
@@ -25,10 +26,18 @@ export default function ExpensesScreen() {
 
  // fetch data of expense from database......................................................   
     const fetchExpenses = async () => {
+
+        const auth = getAuth();
+        const user = auth.currentUser; // Get the currently logged-in user
+        if (!user) {
+            return;
+        }
+        const userId = user.uid; // Get the user's unique ID
+
         try {
             const q = query(
-                collection(db, "OrganizationalExpenses"),
-                orderBy("timestamp", "desc")
+                collection(db,  "users", userId,"OrganizationalExpenses"),
+                orderBy("timestamp", "desc") 
             )
 
             const querySnapshot = await getDocs(q);

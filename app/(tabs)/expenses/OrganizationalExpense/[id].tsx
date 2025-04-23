@@ -4,6 +4,7 @@ import { useLocalSearchParams } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebaseConfig"; 
+import { getAuth } from "firebase/auth";
 
 
 
@@ -39,9 +40,19 @@ export default function IndividualExpenses() {
     // Fetch the specific expense from Firestore
     useEffect(() => {
         const fetchExpense = async () => {
+            const auth = getAuth();
+            const user = auth.currentUser; // Get the currently logged-in user
+            if (!user) {
+                return;
+            }
+            const userId = user.uid; // Get the user's unique ID
             try {
                 if (!id) return;
-                const docRef = doc(db, "OrganizationalExpenses", id);
+                if (typeof id !== "string") {
+                    console.error("Invalid ID format");
+                    return;
+                }
+                const docRef = doc(db, "users", userId, "OrganizationalExpenses", id);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     setExpense(docSnap.data());
@@ -100,7 +111,7 @@ export default function IndividualExpenses() {
             <View style={styles.row}>
                 <Text style={styles.label}>Category :</Text>
                 <Text style={styles.value}>{expense.category || "N/A"}</Text>
-                <MaterialIcons name={expense.categoryIcon } size={20} color="black" />
+                <MaterialIcons name={expense.categoryIcon as any} size={20} color="black" />
             </View>
 
             {/* Amounts */}

@@ -9,6 +9,8 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig"; 
 import { useTheme } from "../../context/ThemeContext"; // Adjusted path to match the correct location
 
+import { getAuth } from "firebase/auth"; // for create individual collection for each user
+
 
 
 /* Pie chart data..............................................................
@@ -107,8 +109,15 @@ const AnalysisScreen = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+
+            const auth = getAuth(); // for get the current user
+            const user = auth.currentUser; 
+            if (!user) {
+                return;
+            }
+            const userId = user.uid; // Get the user's unique ID
             try {
-                const querySnapshot = await getDocs(collection(db, "personalExpenses"));
+                const querySnapshot = await getDocs(collection(db, "users", userId, "personalExpenses"));
     
                 const categoryTotals: Record<string, number> = {};
     
@@ -160,8 +169,14 @@ const AnalysisScreen = () => {
 
     useEffect(() => {
         const fetchBarChartData = async () => {
+            const auth = getAuth(); // for get the current user
+            const user = auth.currentUser;
+            if (!user) {
+                return;
+            }
+            const userId = user.uid; // Get the user's unique ID
             try {
-                const querySnapshot = await getDocs(collection(db, "personalExpenses"));
+                const querySnapshot = await getDocs(collection(db, "users", userId, "personalExpenses"));
     
                 // Initialize sums for Jan–Jun
                 const monthlySums = Array(6).fill(0); // [Jan, Feb, Mar, Apr, May, Jun]
@@ -179,7 +194,7 @@ const AnalysisScreen = () => {
     
                             // Only sum months 1–6 (Jan–Jun)
                             if (month >= 1 && month <= 6) {
-                                monthlySums[month - 1] += totalAmount;
+                                monthlySums[month-1] += totalAmount;
                             }
                         }
                     }
@@ -286,6 +301,9 @@ const AnalysisScreen = () => {
             {/* bar chart code end here..........................................*/}
 
             <View style={createStyles(isDarkMode).bottomcontainer}>
+                <Text style={createStyles(isDarkMode).reportHeader}>Generate Report (For premium users only)</Text>
+                {/* Start Date */}
+                <Text style={createStyles(isDarkMode).label}>Select Date Range</Text>
       {/* Start Date */}
                 <Text style={createStyles(isDarkMode).label}>Start Date</Text>
                     <TouchableOpacity style={createStyles(isDarkMode).input} onPress={() => setShowStartPicker(true)}>
@@ -374,6 +392,7 @@ const createStyles = (isDarkMode: boolean) =>
       fontWeight: "bold",
       textAlign: "left",
       paddingTop: 15,
+      paddingBottom: 6,
       backgroundColor: isDarkMode ? "#2c2c2e" : "rgba(87, 129, 177, 0.92)",
       color: isDarkMode ? "#fff" : "#000",
     },
@@ -382,14 +401,24 @@ const createStyles = (isDarkMode: boolean) =>
       fontWeight: "bold",
       textAlign: "left",
       paddingTop: 15,
+      paddingBottom: 6,
       backgroundColor: isDarkMode ? "#2c2c2e" : "rgba(42, 83, 110, 0.92)",
       color: isDarkMode ? "#fff" : "#000",
     },
     bottomcontainer: {
       flex: 1,
-      padding: 10,
       backgroundColor: isDarkMode ? "#1a1a1a" : "rgba(226, 239, 253, 0.92)",
+
     },
+    reportHeader: {
+        fontSize: 20,
+        fontWeight: "bold",
+        textAlign: "left",
+        paddingTop: 30,
+        paddingBottom: 10,
+        backgroundColor: isDarkMode ? "#2c2c2e" : "rgba(148, 193, 223, 0.92)",
+        color: isDarkMode ? "#fff" : "#000",
+      },
     label: {
       fontSize: 14,
       fontWeight: "600",

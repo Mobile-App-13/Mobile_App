@@ -6,6 +6,8 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../../firebase/firebaseConfig";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { getAuth } from "firebase/auth"; // for create individual collection for each user
+
 
 
 import * as MediaLibrary from 'expo-media-library';
@@ -140,9 +142,16 @@ function addExpenses(){
                 Alert.alert("Error", "Please fill in all required fields");
                 return;
             }
+
+            const auth = getAuth();
+            const user = auth.currentUser; // Get the currently logged-in user
+            if (!user) {
+                return;
+            }
+            const userId = user.uid; // Get the user's unique ID
       
             try {
-                await addDoc(collection(db, "OrganizationalExpenses"), {
+                await addDoc(collection(db, "users", userId, "OrganizationalExpenses"), {
                     invoiceDate,
                     remark,
                     invoiceDetails,
@@ -225,7 +234,7 @@ function addExpenses(){
                 <View style={styles.selectedItem}>
                     {selectedCategory ? (
                     <>
-                        <Image source={selectedCategory.icon} style={styles.icon} />
+                        <Image source={typeof selectedCategory.icon === "string" ? { uri: selectedCategory.icon } : selectedCategory.icon} style={styles.icon} />
                         <Text style={styles.selectedText}>{selectedCategory.name}</Text>
                     </>
                     ) : (
@@ -245,7 +254,7 @@ function addExpenses(){
                 <View style={styles.dropdownMenu}>
                     {categories.map((category, index) => (
                         <TouchableOpacity key={index} style={styles.option} onPress={() => handleSelect(category)}>
-                            <Image source={category.icon} style={styles.icon} />
+                            <Image source={typeof category.icon === "string" ? { uri: category.icon } : category.icon} style={styles.icon} />
                             <Text style={styles.optionText}>{category.name}</Text>
                         </TouchableOpacity>
                     ))}
